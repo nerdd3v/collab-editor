@@ -1,17 +1,20 @@
 import type WebSocket from "ws";
 import { Manager } from "./wsManager.js";
+import { fileModel } from "../db/index.js";
 
 
 
 class File{
     public filename: string | null;
     public userId: string | null;
-    private ws: WebSocket
+    private ws: WebSocket;
+    public content : string | null
 
     constructor(ws: WebSocket){
         this.ws = ws;
-        this.filename = null
+        this.filename = null;
         this.userId = null;
+        this.content = null;
         this.initHandler()
     }
 
@@ -26,12 +29,21 @@ class File{
                         this.userId = message.userId;
                         
                         if (this.filename && this.userId) {  // ✅ Null check
-                            Manager.getInstance().addUser(this.filename, this.userId);
+                            Manager.getInstance().addUser(this.filename, this.ws);
                             console.log("user added:", Manager.getInstance().logger());
                         }
-
-                        
                         break;
+                    case "contribute":
+                        this.content = message.content;
+                        if(!this.content){
+                            return
+                        }
+                        let index = Manager.getInstance().files.findIndex(f=> f.filename == this.filename)
+                        Manager.getInstance().files[index]?.users.forEach(ws=>{
+                            ws.send(this.content!)
+                        })
+                        break;
+                    
                 }
             } catch (error) {
                 console.error("Invalid message:", error);

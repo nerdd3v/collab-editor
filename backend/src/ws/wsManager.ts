@@ -1,10 +1,12 @@
+import type WebSocket from "ws";
+
 interface fileUsers{
     filename: string,
-    users: string[]
+    users: WebSocket[]
 }
 
 export class Manager{
-    private files: fileUsers[];
+    public files: fileUsers[];
     static instance: Manager;
 
     private constructor(){
@@ -18,7 +20,7 @@ export class Manager{
         return Manager.instance
     }
 
-    public addUser(f: string, uid: string) {
+    public addUser(f: string, uid: WebSocket) {
         const instance = Manager.getInstance();  // ✅ Single call
         const fileIndex = instance.files.findIndex(i => i.filename === f);
         
@@ -29,6 +31,10 @@ export class Manager{
         } else {
             instance.files.push({ filename: f, users: [uid] });
         }
+    }
+
+    public broadcast(){
+
     }
     
 

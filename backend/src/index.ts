@@ -4,6 +4,7 @@ import { createServer } from "node:http";
 import { regRouter } from "./routes/index.js";
 import initialiser from "./ws/index.js";
 
+
 const app = express();
 export const server = createServer(app);
 
@@ -12,14 +13,14 @@ app.use("/api", regRouter);
 
 app.get('/', (req, res) => res.status(200).json({ message: "hello world" }));
 
-// ✅ Connect BEFORE listen()
+
 async function startServer() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/chatdb"); // Add DB name
-    console.log("✅ MongoDB connected");
+    await mongoose.connect("mongodb://localhost:27017/chatdb",{})
+    console.log("mongo server connected")
   } catch (error) {
     //@ts-ignore
-    console.error("❌ MongoDB error:", error.message);
+    console.error("MongoDB error:", error.message);
     process.exit(1);
   }
 

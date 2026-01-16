@@ -51,7 +51,8 @@ regRouter.post('/createFile', async(req, res)=>{
         })
 
         return res.json({
-            message: "file creation success"
+            message: "file creation success",
+            fileId: x._id
         }).status(200)
     } catch (error) {
         return res.json({
