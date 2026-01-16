@@ -1,3 +1,4 @@
+import { Manager } from "./wsManager.js";
 class File {
     filename;
     userId;
@@ -10,14 +11,23 @@ class File {
     }
     initHandler() {
         this.ws.on('message', (data) => {
-            let message = JSON.parse(data.toString());
-            switch (message.type) {
-                case "interact":
-                    this.filename = message.filename;
-                    this.userId = message.userId;
+            try {
+                const message = JSON.parse(data.toString());
+                switch (message.type) {
+                    case "interact":
+                        this.filename = message.filename;
+                        this.userId = message.userId;
+                        if (this.filename && this.userId) { // ✅ Null check
+                            Manager.getInstance().addUser(this.filename, this.userId);
+                            console.log("user added:", Manager.getInstance().logger());
+                        }
+                        break;
+                }
+            }
+            catch (error) {
+                console.error("Invalid message:", error);
             }
         });
     }
 }
-export {};
 //# sourceMappingURL=fileHandler.js.map

@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { createServer } from "node:http";
 import { regRouter } from "./routes/index.js";
+import initialiser from "./ws/index.js";
 const app = express();
 export const server = createServer(app);
 app.use(express.json());
@@ -19,6 +20,7 @@ async function startServer() {
         process.exit(1);
     }
     server.listen(3000, () => console.log('🚀 Server on port 3000'));
+    initialiser();
 }
 startServer();
 //# sourceMappingURL=index.js.map

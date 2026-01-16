@@ -1,1 +1,1 @@
-{"version":3,"file":"wsManager.d.ts","sourceRoot":"","sources":["../../src/ws/wsManager.ts"],"names":[],"mappings":""}
+{"version":3,"file":"wsManager.d.ts","sourceRoot":"","sources":["../../src/ws/wsManager.ts"],"names":[],"mappings":"AAKA,qBAAa,OAAO;IAChB,OAAO,CAAC,KAAK,CAAc;IAC3B,MAAM,CAAC,QAAQ,EAAE,OAAO,CAAC;IAEzB,OAAO;IAIP,MAAM,CAAC,WAAW;IAOX,OAAO,CAAC,CAAC,EAAE,MAAM,EAAE,GAAG,EAAE,MAAM;IAc9B,MAAM;CAGhB"}

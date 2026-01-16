@@ -1,17 +1,29 @@
-class Mangaer {
-    file; //{"filename": ["uid1", uid2]}
+export class Manager {
+    files;
     static instance;
     constructor() {
-        this.file = [];
+        this.files = [];
     }
     static getInstance() {
-        if (!Mangaer.instance) {
-            Mangaer.instance = new Mangaer();
+        if (!Manager.instance) {
+            Manager.instance = new Manager();
         }
-        return Mangaer.instance;
+        return Manager.instance;
     }
-    addUser(file) {
+    addUser(f, uid) {
+        const instance = Manager.getInstance(); // ✅ Single call
+        const fileIndex = instance.files.findIndex(i => i.filename === f);
+        if (fileIndex !== -1) {
+            if (!instance.files[fileIndex]?.users.includes(uid)) {
+                instance.files[fileIndex]?.users.push(uid);
+            }
+        }
+        else {
+            instance.files.push({ filename: f, users: [uid] });
+        }
+    }
+    logger() {
+        console.log(Manager.getInstance().files);
     }
 }
-export {};
 //# sourceMappingURL=wsManager.js.map
