@@ -10,8 +10,8 @@ export declare class Manager {
     static getInstance(): Manager;
     addUser(f: string, uid: WebSocket): void;
     removeUser(id: string, uid: WebSocket): void;
-    broadcast(i: Manager, id: string): void;
-    logger(): void;
+    broadcast(i: Manager, id: string, data: string): void;
+    logger(id: string): void;
 }
 export {};
 //# sourceMappingURL=wsManager.d.ts.map

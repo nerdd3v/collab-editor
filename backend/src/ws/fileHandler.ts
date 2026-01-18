@@ -39,18 +39,24 @@ export class File{
 
                         //logic to add the user ID and fileID to the manager class var
 
-                        
+                        instance.addUser(this.fileId, this.ws);
+                        console.log("user created the file with fileId: ", this.fileId);
+
+                        instance.broadcast(instance, this.fileId, "boss cretaed the hood")
 
                         break;
 
                     case "interact":
                         this.filename = message.filename;
                         this.userId = message.userId;
+                        this.fileId = message.fileId
                         
-                        if (this.filename && this.userId) {  // ✅ Null check
-                            instance.addUser(this.filename, this.ws);
-                            console.log("user added:", instance.logger());
+                        if (this.fileId && this.userId) {  // ✅ Null check
+                            instance.addUser(this.fileId, this.ws);
+                            console.log("user added:", instance.logger(this.fileId));
                         }
+
+                        instance.broadcast(instance, this.fileId!, "thug added to the hood")
                         break;
                     case "contribute":
                         this.content = message.content;

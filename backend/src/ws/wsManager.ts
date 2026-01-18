@@ -1,3 +1,4 @@
+
 import type WebSocket from "ws";
 
 interface fileUsers{
@@ -55,17 +56,46 @@ export class Manager{
         }
     }
 
-    public broadcast(i: Manager, id: string){
+    public broadcast(i: Manager, id: string, data: string){
         const index = i.files.findIndex(ind => ind.fileId == id);
 
         if(index == -1){
-            console.log("")
+            console.log("file Id does not exist");
+            return;
+        }
+        else{
+            //logic for broadcasting the messages to every user related to that file; except the sender sending it
+            //exception logic later *****************************
+
+            try{
+                i.files[index]?.users.forEach(u=>{
+                    u.send(data);
+                })
+                // might need to manipulate the data to send it in a better format
+                console.log("sent/ broadcasted the data to the related file and users")
+            }catch(e){
+                console.error("some error occured in broadcasting the data")
+            }
         }
     }
     
 
 
-    public logger(){
-        console.log(Manager.getInstance().files)
+    public logger(id: string){
+        const instance = Manager.getInstance();
+
+        const index = instance.files.findIndex(f => f.fileId == id);
+
+        if(index === -1){
+            return 
+        }
+
+        const users = instance.files[index]?.users;
+
+        for(let i = 0; i< users!.length; i++){
+            console.log(users![i]);
+        }
     }
 }
+
+//some error occured in the logger function
