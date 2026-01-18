@@ -1,6 +1,6 @@
 import type WebSocket from "ws";
 interface fileUsers {
-    filename: string;
+    fileId: string;
     users: WebSocket[];
 }
 export declare class Manager {
@@ -9,7 +9,8 @@ export declare class Manager {
     private constructor();
     static getInstance(): Manager;
     addUser(f: string, uid: WebSocket): void;
-    broadcast(): void;
+    removeUser(id: string, uid: WebSocket): void;
+    broadcast(i: Manager, id: string): void;
     logger(): void;
 }
 export {};

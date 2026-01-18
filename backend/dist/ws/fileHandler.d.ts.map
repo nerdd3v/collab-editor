@@ -1,1 +1,1 @@
-{"version":3,"file":"fileHandler.d.ts","sourceRoot":"","sources":["../../src/ws/fileHandler.ts"],"names":[],"mappings":""}
+{"version":3,"file":"fileHandler.d.ts","sourceRoot":"","sources":["../../src/ws/fileHandler.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,SAAS,MAAM,IAAI,CAAC;AAShC,qBAAa,IAAI;IACN,QAAQ,EAAE,MAAM,GAAG,IAAI,CAAC;IACxB,MAAM,EAAE,MAAM,GAAG,IAAI,CAAC;IAC7B,OAAO,CAAC,EAAE,CAAY;IACf,OAAO,EAAG,MAAM,GAAG,IAAI,CAAC;IACxB,MAAM,EAAE,MAAM,GAAG,IAAI,CAAC;gBAEjB,EAAE,EAAE,SAAS;IASzB,WAAW;CA6Cd"}

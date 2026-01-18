@@ -24,6 +24,7 @@ export class File{
     }
 
     initHandler() {
+        const instance: Manager = Manager.getInstance();
         this.ws.on('message', (data) => {
             try {
                 const message = JSON.parse(data.toString());
@@ -35,6 +36,11 @@ export class File{
                         this.userId = message.userId;
 
                         console.log("create the file: " , this.fileId)
+
+                        //logic to add the user ID and fileID to the manager class var
+
+                        
+
                         break;
 
                     case "interact":
@@ -42,8 +48,8 @@ export class File{
                         this.userId = message.userId;
                         
                         if (this.filename && this.userId) {  // ✅ Null check
-                            Manager.getInstance().addUser(this.filename, this.ws);
-                            console.log("user added:", Manager.getInstance().logger());
+                            instance.addUser(this.filename, this.ws);
+                            console.log("user added:", instance.logger());
                         }
                         break;
                     case "contribute":
@@ -52,8 +58,8 @@ export class File{
                             return
                         }
                         //some error can occur here
-                        let index = Manager.getInstance().files.findIndex(f=> f.fileId == this.fileId)
-                        Manager.getInstance().files[index]?.users.forEach(ws=>{
+                        let index = instance.files.findIndex(f=> f.fileId == this.fileId)
+                        instance.files[index]?.users.forEach(ws=>{
                             ws.send(this.content!)
                         })
                         break;
