@@ -22,6 +22,8 @@ export class Manager {
             instance.files.push({ filename: f, users: [uid] });
         }
     }
+    broadcast() {
+    }
     logger() {
         console.log(Manager.getInstance().files);
     }

@@ -1,20 +1,25 @@
 import type WebSocket from "ws";
 import { Manager } from "./wsManager.js";
 import { fileModel } from "../db/index.js";
+import { getRandomString } from "../services/randomIdGenerator.js";
 
+// from next time I can create a keyPair of the curve in order to give this a random fileId
 
+// do the seed and bumps
 
-class File{
+export class File{
     public filename: string | null;
     public userId: string | null;
     private ws: WebSocket;
-    public content : string | null
+    public content : string | null;
+    public fileId: string | null;
 
     constructor(ws: WebSocket){
         this.ws = ws;
         this.filename = null;
         this.userId = null;
         this.content = null;
+        this.fileId = null
         this.initHandler()
     }
 
@@ -24,6 +29,14 @@ class File{
                 const message = JSON.parse(data.toString());
                 
                 switch (message.type) {
+                    case "create":
+                        this.filename = message.fileName;
+                        this.fileId = getRandomString(10);
+                        this.userId = message.userId;
+
+                        console.log("create the file: " , this.fileId)
+                        break;
+
                     case "interact":
                         this.filename = message.filename;
                         this.userId = message.userId;
@@ -38,7 +51,8 @@ class File{
                         if(!this.content){
                             return
                         }
-                        let index = Manager.getInstance().files.findIndex(f=> f.filename == this.filename)
+                        //some error can occur here
+                        let index = Manager.getInstance().files.findIndex(f=> f.fileId == this.fileId)
                         Manager.getInstance().files[index]?.users.forEach(ws=>{
                             ws.send(this.content!)
                         })

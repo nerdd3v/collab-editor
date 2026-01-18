@@ -6,6 +6,10 @@ export default async function initialiser() {
         ws.on('message', (data) => {
             console.log(data.toString());
         });
+        ws.on('close', () => {
+            console.log("session terminated");
+            ws.close();
+        });
     });
 }
 //# sourceMappingURL=index.js.map
