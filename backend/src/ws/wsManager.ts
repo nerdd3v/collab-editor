@@ -33,6 +33,7 @@ export class Manager{
             instance.files.push({ fileId: f, users: [uid] });
         }
     }
+    
 
     public removeUser(id: string,uid:WebSocket){ //here id = fileId
 
