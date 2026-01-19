@@ -67,9 +67,7 @@ export class Manager {
             return;
         }
         const users = instance.files[index]?.users;
-        for (let i = 0; i < users.length; i++) {
-            console.log(users[i]);
-        }
+        console.log(users?.length);
     }
 }
 //some error occured in the logger function

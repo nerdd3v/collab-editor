@@ -28,10 +28,10 @@ export class File {
                         this.fileId = getRandomString(10);
                         this.userId = message.userId;
                         console.log("create the file: ", this.fileId);
-                        //logic to add the user ID and fileID to the manager class var
                         instance.addUser(this.fileId, this.ws);
                         console.log("user created the file with fileId: ", this.fileId);
                         instance.broadcast(instance, this.fileId, "boss cretaed the hood");
+                        console.log("user added:", instance.logger(this.fileId));
                         break;
                     case "interact":
                         this.filename = message.filename;
@@ -48,7 +48,6 @@ export class File {
                         if (!this.content) {
                             return;
                         }
-                        //some error can occur here
                         let index = instance.files.findIndex(f => f.fileId == this.fileId);
                         instance.files[index]?.users.forEach(ws => {
                             ws.send(this.content);

@@ -33,7 +33,6 @@ export class Manager{
             instance.files.push({ fileId: f, users: [uid] });
         }
     }
-    
 
     public removeUser(id: string,uid:WebSocket){ //here id = fileId
 
@@ -93,9 +92,7 @@ export class Manager{
 
         const users = instance.files[index]?.users;
 
-        for(let i = 0; i< users!.length; i++){
-            console.log(users![i]);
-        }
+        console.log(users?.length)
     }
 }
 
