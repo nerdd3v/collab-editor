@@ -1,5 +1,5 @@
 // App.jsx - WORKING VERSION (No TypeScript)
-import React, { useState, useRef, useEffect } from 'react';
+import  { useState, useRef, useEffect } from 'react';
 import './App.css';
 
 const WS_URL = 'ws://localhost:3000';
