@@ -3,15 +3,18 @@ import mongoose from "mongoose";
 import { createServer } from "node:http";
 import { regRouter } from "./routes/index.js";
 import initialiser from "./ws/index.js";
+import { Manager } from "./ws/wsManager.js";
 const app = express();
 export const server = createServer(app);
 app.use(express.json());
 app.use("/api", regRouter);
 app.get('/', (req, res) => res.status(200).json({ message: "hello world" }));
+const manager = Manager.getInstance();
 async function startServer() {
     try {
         await mongoose.connect("mongodb://localhost:27017/chatdb", {});
         console.log("mongo server connected");
+        console.log(manager);
     }
     catch (error) {
         //@ts-ignore
