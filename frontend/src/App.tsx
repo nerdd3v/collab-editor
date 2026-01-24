@@ -12,7 +12,13 @@ function App() {
   const [showEditor, setShowEditor] = useState<boolean>(false);
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<number | null>(null);
-  const retryCountRef = useRef<number>(0);
+  const retryCountRef = useRef<number>(0);  
+  const [posX, setPosX] = useState(0);
+const [posY, setPosY] = useState(0);
+const [isDragging, setIsDragging] = useState(false);
+const ballRef = useRef<HTMLDivElement>(null);
+
+
 
   // Fixed uidHandler - use onChange properly
   const uidHandler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -254,22 +260,55 @@ function App() {
               ← Back
             </button>
           </div>
-          
-          <textarea
-            value={content}
-            onChange={handleContentChange}
-            placeholder="Collaborate live... Type to sync!"
-            style={{
-              width: '100%',
-              height: '400px',
-              padding: '15px',
-              fontSize: '16px',
-              border: '2px solid #dee2e6',
-              borderRadius: '5px',
-              resize: 'vertical',
-              fontFamily: 'monospace'
-            }}
-          />
+          <div style={{ position: 'relative', width: '100%', height: '400px' }}>
+  <div
+    ref={ballRef}
+    onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => {
+      setIsDragging(true);
+      e.preventDefault(); // Prevent text selection
+    }}
+    onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
+      if (isDragging) {
+        setPosX(e.clientX - 5); // -5 to center the 10x10 ball
+        setPosY(e.clientY - 5);
+      }
+    }}
+    onMouseUp={() => setIsDragging(false)}
+    onMouseLeave={() => setIsDragging(false)}
+    style={{
+      height: "10px",
+      width: "10px",
+      backgroundColor: "green",
+      borderRadius: "50%",
+      zIndex: 12,
+      position: "absolute",
+      left: `${posX}px`,
+      top: `${posY}px`,
+      cursor: 'grab',
+      transform: 'translate(-50%, -50%)', // Perfect centering
+      transition: isDragging ? 'none' : 'all 0.1s ease', // Smooth when not dragging
+      boxShadow: isDragging ? '0 0 10px rgba(0,255,0,0.5)' : 'none'
+    }}
+  />
+  
+  <textarea
+    value={content}
+    onChange={handleContentChange}
+    placeholder="Collaborate live... Type to sync! (Drag green ball around)"
+    style={{
+      width: '100%',
+      height: '400px',
+      padding: '15px',
+      fontSize: '16px',
+      border: '2px solid #3b83ca',
+      borderRadius: '5px',
+      resize: 'vertical',
+      fontFamily: 'monospace',
+      position: 'relative',
+      zIndex: 1 // Behind the ball
+    }}
+  />
+</div>
           
           <div style={{ 
             display: 'flex', 
